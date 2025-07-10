@@ -1,5 +1,5 @@
 import React, { use, useEffect } from "react";
-import RestaurantCard from "./RestaurantCard";
+import RestaurantCard, { withPromotedLabel } from "./RestaurantCard";
 import Shimmer from "./Shimmer";
 import { useState } from "react";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ const Body = () => {
   const [listOfRestaurants, setListOfRestaurants] = useState([]);
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchText, setSearchText] = useState("");
+  const RestaurantsCardPromoted=withPromotedLabel(RestaurantCard);
 
   useEffect(() => {
     fetchData();
@@ -82,7 +83,11 @@ return listOfRestaurants.length === 0 ? (
     <div className="flex flex-wrap justify-center gap-6 max-w-7xl mx-auto">
       {filteredRestaurants.map((res) => (
         <Link to={"/restaurant/" + res.info.id} key={res.info.id}>
-          <RestaurantCard resData={res} />
+          {res.info.isOpen ? (
+            <RestaurantsCardPromoted resData={res} />
+          ) : (
+            <RestaurantCard resData={res} />
+          )}
         </Link>
       ))}
     </div>

@@ -3,35 +3,58 @@ import { useParams } from "react-router-dom";
 import { MENU_API } from "../utils/constants";
 import Shimmer from "./Shimmer";
 import useRestaurantMenu from "../utils/useRestaurantMenu";
+import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
   // const [resInfo, setResInfo] = useState(null);
   const { resId } = useParams();
 
-  const resInfo= useRestaurantMenu(resId);
+  const resInfo = useRestaurantMenu(resId);
   if (!resInfo) {
     return <Shimmer />;
   }
 
-  const { name, costForTwoMessage, cuisines } =
-    resInfo?.cards?.[2]?.card?.card?.info;
-  const { itemCards } =
-    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
+  const categoryCards =
+    resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards.filter(
+      (c) =>
+        c.card?.card?.["@type"] ===
+        "type.googleapis.com/swiggy.presentation.food.v2.ItemCategory"
+    );
+
+  const {
+    name,
+    costForTwoMessage,
+    cuisines,
+    avgRating,
+    totalRatingsString,
+    sla,
+    areaName,
+  } = resInfo?.cards?.[2]?.card?.card?.info;
+  // const { itemCards } =
+  //   resInfo?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card;
 
   return (
-    <div className="menu">
-      <h1>{name}</h1>
-      <p>
-        {cuisines.join(", ")} - {costForTwoMessage}
-      </p>
-      <ul>
-        {itemCards?.map((item) => (
-          <li key={item.card.info.id}>
-            {item.card.info.name} - {"Rs."}
-            {item.card.info.price / 100}
-          </li>
+    <div className="max-w-6/12 mx-auto p-6">
+      <div className="mx-auto bg-white rounded-lg shadow-md p-6 mt-2">
+        <h1 className="text-2xl font-bold mb-2">{name}</h1>
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-green-600 font-semibold">★{avgRating}</span>
+          <span className="text-gray-400 text-sm">({totalRatingsString})</span>
+          <span className="text-gray-400 text-sm">| {costForTwoMessage}</span>
+        </div>
+        <p className="text-gray-600 text-sm mb-1">{cuisines.join(", ")}</p>
+        <p className="text-gray-500 text-sm mb-1">
+          Outlet: <span className="font-medium">{areaName}</span>
+        </p>
+        <p className="text-green-500 text-sm font-medium">
+          {sla.minDeliveryTime}-{sla.maxDeliveryTime} mins delivery
+        </p>
+      </div>
+      <div className="mt-6 rounded-lg shadow-m">
+        {categoryCards.map((cat) => (
+          <RestaurantCategory key={cat?.card?.card.title} data={cat?.card?.card} />
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

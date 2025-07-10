@@ -2,7 +2,7 @@ import React from "react";
 import { CDN_URL } from "../utils/constants.js";
 
 const RestaurantCard = (props) => {
-  const { resData } = props;
+  const { resData } = props;  
   const { name, cuisines, cloudinaryImageId, avgRating, costForTwo } =
     resData.info;
   const { deliveryTime } = resData.info.sla;
@@ -29,5 +29,16 @@ const RestaurantCard = (props) => {
     </div>
   );
 };
+
+export const withPromotedLabel=(RestaurantCard)=>{
+  return(props)=>{
+    return(
+      <div>
+      <label className="absolute bg-black text-white m-2 p-2 rounded-b-lg">Promoted</label>
+      <RestaurantCard {...props}/>
+      </div>
+    )
+  }
+}
 
 export default RestaurantCard;

@@ -8,10 +8,10 @@ const Header = () => {
   const onlineStatus = useOnlineStatus();
 
   return (
-    <header className="flex justify-between items-center px-8 py-4 bg-white shadow-md border-b border-gray-100">
+    <header className="flex justify-between items-center px-8 py-0 bg-white shadow-md border-b border-gray-100">
       <div className="flex items-center">
         <img
-          className="w-32 h-auto"
+          className="w-25 h-24"
           src={LOGO_URL}
           alt="Logo"
         />
