@@ -1,12 +1,11 @@
 import React, { useState } from 'react'
 import ItemList from './itemList';
 
-const RestaurantCategory = ({data}) => {
-  const [showItem, setShowitem]= useState(false);
-  const handleClick=()=>{
-    setShowitem(!showItem);
-  }
-  
+const RestaurantCategory = ({ data, showItem, setShowIndex }) => {
+  const handleClick = () => {
+    setShowIndex();
+  };
+
   return (
     <div>
       <div className="w-full my-4 p-4 bg-gray-50 shadow-lg m-auto">
@@ -23,6 +22,6 @@ const RestaurantCategory = ({data}) => {
       </div>
     </div>
   );
-}
+};
 
 export default RestaurantCategory

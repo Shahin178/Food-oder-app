@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./style.css";
 import Header from "./components/Header.jsx";
 import Body from "./components/Body.jsx";
@@ -7,13 +7,25 @@ import Contact from "./components/Contact.jsx";
 import Error from "./components/Error.jsx";
 import { createBrowserRouter, Outlet } from "react-router-dom";
 import RestaurantMenu from "./components/RestaurantMenu.jsx";
+import UserContext from "./utils/UserContext.js";
 
 const App = () => {
+  const [userInfo, setUserInfo]= useState();
+
+  useEffect(()=>{
+    const data={
+      name:"shahin Bano",
+    }
+    setUserInfo(data.name)
+  },[])
+
   return (
-    <div>
-      <Header />
-      <Outlet />
-    </div>
+    <UserContext.Provider value={{ loggedInUser: userInfo, setUserInfo }}>
+      <div>
+        <Header />
+        <Outlet />
+      </div>
+    </UserContext.Provider>
   );
 };
 

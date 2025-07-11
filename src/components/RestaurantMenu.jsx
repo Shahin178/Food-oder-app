@@ -6,7 +6,7 @@ import useRestaurantMenu from "../utils/useRestaurantMenu";
 import RestaurantCategory from "./RestaurantCategory";
 
 const RestaurantMenu = () => {
-  // const [resInfo, setResInfo] = useState(null);
+  const [showIndex, setShowIndex]=useState(0);
   const { resId } = useParams();
 
   const resInfo = useRestaurantMenu(resId);
@@ -51,8 +51,13 @@ const RestaurantMenu = () => {
         </p>
       </div>
       <div className="mt-6 rounded-lg shadow-m">
-        {categoryCards.map((cat) => (
-          <RestaurantCategory key={cat?.card?.card.title} data={cat?.card?.card} />
+        {categoryCards.map((cat, index) => (
+          <RestaurantCategory
+            key={cat?.card?.card.title}
+            data={cat?.card?.card}
+            showItem={index === showIndex && true}
+            setShowIndex={() => setShowIndex(index)}
+          />
         ))}
       </div>
     </div>
