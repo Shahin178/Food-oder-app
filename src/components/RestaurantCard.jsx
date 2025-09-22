@@ -4,13 +4,13 @@ import UserContext from "../utils/UserContext.js";
 
 const RestaurantCard = (props) => {
   const {loggedInUser}=useContext(UserContext);
-  const { resData } = props;  
+  const { resData } = props;    
   const { name, cuisines, cloudinaryImageId, avgRating, costForTwo } =
     resData.info;
   const { deliveryTime } = resData.info.sla;
 
   return (
-    <div className="w-[240px] bg-white rounded-lg shadow p-4 flex flex-col items-center hover:shadow-lg transition-shadow">
+    <div data-testid="resCard" className="w-[240px] bg-white rounded-lg shadow p-4 flex flex-col items-center hover:shadow-lg transition-shadow">
       <img
         className="w-full h-36 object-cover rounded-md mb-3"
         alt="res-logo"

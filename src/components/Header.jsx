@@ -10,7 +10,7 @@ const Header = () => {
   const { loggedInUser } = useContext(UserContext);
   const onlineStatus = useOnlineStatus();
   const cartItems = useSelector((store) => store.cart.items);
-  console.log("cartItems in Header:", cartItems);
+  // console.log("cartItems in Header:", cartItems);
   
 
   return (
@@ -46,7 +46,7 @@ const Header = () => {
           </li>
           <li>
             <Link to="/cart" className="hover:text-blue-600 transition-colors">
-              Cart - ({cartItems.length})
+              Cart - {cartItems.length}
             </Link>
           </li>
           <li>
